@@ -1,0 +1,1049 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PE-pal :3</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        
+        * { box-sizing: border-box; border-radius: 0 !important; }
+
+        :root {
+            --bg-dark:       #120e1a;
+            --bg-card:       #1e1630;
+            --text-main:     #e0d6f0;
+            --text-muted:    #8a7ba8;
+            --accent-pink:   #ff77a9;
+            --accent-purple: #77ddff;
+            --accent-blue:   #c49bff;
+            --border:        1px solid var(--accent-pink);
+            --border-muted:  1px solid var(--text-muted);
+            --border-purple: 1px solid var(--accent-purple);
+            --border-blue:   1px solid var(--accent-blue);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'VT323', monospace;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-size: 22px;
+            line-height: 1.4;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 { margin: 0; font-family: 'VT323', monospace; font-weight: normal; }
+        code, .mono { font-family: 'Share Tech Mono', monospace; font-size: 18px; }
+        a { color: var(--accent-pink); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #3a2f50; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-pink); }
+
+        
+        #landing-page {
+            min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; padding: 40px 20px;
+        }
+        #landing-page.hidden { display: none; }
+
+        .hero {
+            text-align: center; margin-bottom: 60px; border-bottom: var(--border);
+            padding-bottom: 40px; width: 100%; max-width: 800px;
+        }
+        .hero h1 {
+            font-size: 5.5rem; color: var(--accent-pink); margin-bottom: 15px;
+            letter-spacing: 3px;
+        }
+        .hero p { font-size: 24px; color: var(--text-muted); max-width: 600px; margin: 0 auto 20px; }
+        .hero-btns { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+
+        .neo-btn {
+            background: transparent; color: var(--accent-pink); border: var(--border);
+            padding: 14px 38px; font-size: 28px; font-family: 'VT323', monospace;
+            cursor: pointer; display: inline-block; text-decoration: none;
+            transition: background 0.12s, color 0.12s;
+        }
+        .neo-btn:hover { background: var(--accent-pink); color: var(--bg-dark); text-decoration: none; }
+        .neo-btn.btn-purple { color: var(--accent-purple); border-color: var(--accent-purple); }
+        .neo-btn.btn-purple:hover { background: var(--accent-purple); color: var(--bg-dark); }
+
+        .neo-btn-small {
+            background: transparent; color: var(--text-muted); border: var(--border-muted);
+            padding: 7px 16px; font-family: 'VT323', monospace; font-size: 22px;
+            cursor: pointer; transition: all 0.12s;
+        }
+        .neo-btn-small:hover { border-color: var(--accent-pink); color: var(--accent-pink); }
+        .neo-btn-small.blue { color: var(--accent-blue); border-color: var(--accent-blue); }
+        .neo-btn-small.blue:hover { background: var(--accent-blue); color: #fff; }
+
+        .accordion-list { max-width: 800px; width: 100%; margin-bottom: 60px; display: flex; flex-direction: column; gap: 2px; }
+        .acc-item { background: var(--bg-card); border: var(--border-muted); }
+        .acc-header { width: 100%; background: transparent; color: var(--accent-pink); border: none; padding: 16px 22px; font-size: 26px; font-family: 'VT323', monospace; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 10px; transition: background 0.15s; }
+        .acc-header:hover { background: rgba(255,119,169,0.06); }
+        .acc-arrow { color: var(--text-muted); font-family: 'Share Tech Mono', monospace; font-size: 18px; transition: transform 0.2s; min-width: 14px; display: inline-block; }
+        .acc-item.open .acc-arrow { transform: rotate(90deg); }
+        .acc-body { display: none; border-top: 1px solid #3a2f50; }
+        .acc-item.open .acc-body { display: block; padding: 18px 22px 22px; }
+        .acc-body p { color: var(--text-muted); margin-bottom: 12px; }
+        .acc-body ul { padding-left: 20px; color: var(--text-muted); }
+        .acc-body li { margin-bottom: 8px; }
+        .acc-body strong { color: var(--accent-pink); }
+
+        .tutorial-box {
+            max-width: 800px; width: 100%; margin-bottom: 60px;
+            border: var(--border); padding: 30px; background: var(--bg-card);
+        }
+        .tutorial-box h2 { color: var(--accent-pink); margin-bottom: 25px; text-align: center; font-size: 40px; }
+        .step { display: flex; gap: 20px; margin-bottom: 25px; align-items: flex-start; }
+        .step-num { color: var(--accent-purple); font-size: 32px; min-width: 42px; font-family: 'Share Tech Mono', monospace; }
+        .step-content h3 { color: var(--accent-blue); margin-bottom: 5px; font-size: 26px; }
+        .step-content p  { color: var(--text-muted); margin: 0; }
+
+        footer {
+            margin-top: auto; padding: 20px; color: var(--text-muted);
+            font-size: 20px; text-align: center; border-top: var(--border-muted); width: 100%;
+        }
+
+        
+        #app-wrapper { display: none; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
+        #app-wrapper.active { display: flex; }
+
+        .app-topbar {
+            width: 90%; max-width: 800px; display: flex; justify-content: space-between;
+            align-items: center; margin-top: 20px; padding: 10px 0; border-bottom: var(--border-muted);
+        }
+        .app-topbar span { color: var(--accent-pink); font-size: 28px; }
+
+        #drop-zone {
+            width: 90%; max-width: 800px; min-height: 280px; border: var(--border);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            margin-top: 50px; transition: all 0.15s ease; background: var(--bg-card);
+            cursor: pointer; padding: 30px; gap: 10px;
+        }
+        #drop-zone.dragover {
+            background: #2a1f40 !important; border-color: var(--accent-cyan, var(--accent-purple)) !important;
+        }
+        #drop-zone.hidden { display: none; }
+        .drop-icon { font-size: 56px; color: var(--accent-pink); font-family: 'Share Tech Mono', monospace; pointer-events: none; }
+        #drop-zone h2, #drop-zone p { pointer-events: none; }
+
+        #loading-bar-wrap {
+            width: 90%; max-width: 800px; margin-top: 50px; padding: 30px 40px;
+            border: var(--border); background: var(--bg-card);
+            display: none; flex-direction: column; align-items: center; gap: 18px;
+        }
+        #loading-bar-wrap.visible { display: flex; }
+        #loading-msg   { color: var(--accent-pink); font-size: 28px; text-align: center; }
+        #loading-track { font-family: 'Share Tech Mono', monospace; font-size: 22px; color: var(--accent-purple); letter-spacing: 1px; }
+
+        #dashboard {
+            width: 90%; max-width: 1200px; display: none;
+            flex-direction: column; gap: 20px; margin-top: 30px; padding-bottom: 60px;
+        }
+        #dashboard.active { display: flex; }
+
+        .card { background: var(--bg-card); border: var(--border-muted); padding: 25px; }
+
+        .file-info-bar {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            flex-wrap: wrap; gap: 15px; border-bottom: var(--border); padding-bottom: 15px;
+        }
+        h1.file-title { font-size: 34px; color: var(--accent-purple); margin-bottom: 8px; }
+        .badge {
+            background: var(--bg-dark); border: var(--border-muted); padding: 4px 12px;
+            font-size: 17px; font-family: 'Share Tech Mono', monospace;
+            color: var(--accent-blue); display: inline-block; margin-right: 8px; margin-bottom: 4px;
+        }
+
+        #section-map-container {
+            height: 58px; width: 100%; background: var(--bg-dark);
+            border: var(--border-muted); display: flex; overflow: hidden; margin-bottom: 12px;
+        }
+        .map-segment {
+            height: 100%; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; color: var(--bg-dark); font-size: 15px;
+            font-family: 'Share Tech Mono', monospace; overflow: hidden;
+            white-space: nowrap; border-right: 2px solid var(--bg-dark);
+            transition: filter 0.15s; position: relative;
+        }
+        .map-segment:last-child { border-right: none; }
+        .map-segment:hover { filter: brightness(1.3); z-index: 2; }
+        .map-segment.active-section { outline: 3px solid var(--accent-purple); z-index: 3; outline-offset: -3px; }
+        .map-segment.suspicious {
+            background: repeating-linear-gradient(45deg,
+                var(--accent-pink), var(--accent-pink) 10px,
+                var(--bg-dark) 10px, var(--bg-dark) 20px) !important;
+            color: var(--text-main);
+        }
+
+        .section-row {
+            display: grid; grid-template-columns: 130px 1fr 110px 210px 110px;
+            gap: 12px; align-items: center; padding: 13px 0;
+            border-bottom: 1px dashed #3a2f50; cursor: pointer; transition: background 0.1s;
+        }
+        .section-row:hover { background: rgba(255,119,169,0.04); }
+        .section-row.active-section { background: rgba(119,221,255,0.07); }
+        .section-row:last-child { border-bottom: none; }
+        .entropy-bar-bg { width: 100%; height: 11px; background: var(--bg-dark); border: var(--border-muted); overflow: hidden; }
+        .entropy-bar-fill { height: 100%; transition: width 0.6s ease; }
+
+        .info-trigger { color: var(--accent-purple); cursor: help; position: relative; display: inline-block; font-size: 20px; }
+        .info-trigger .info-text {
+            visibility: hidden; width: 360px; background: var(--bg-dark);
+            color: var(--text-main); text-align: left; padding: 14px;
+            position: absolute; z-index: 100; bottom: 140%; left: 50%;
+            transform: translateX(-50%); opacity: 0; transition: opacity 0.15s;
+            border: var(--border); font-size: 19px; line-height: 1.4; font-weight: normal;
+        }
+        .info-trigger .info-text::after {
+            content: ""; position: absolute; top: 100%; left: 50%;
+            margin-left: -6px; border-width: 6px; border-style: solid;
+            border-color: var(--accent-pink) transparent transparent transparent;
+        }
+        .info-trigger:hover .info-text { visibility: visible; opacity: 1; }
+
+        .flag-badge {
+            background: var(--bg-dark); color: var(--accent-pink);
+            border: 1px solid var(--accent-pink); padding: 3px 7px;
+            font-size: 19px; display: inline-block; margin-bottom: 4px; font-family: 'VT323', monospace;
+        }
+
+        .iat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
+        .dll-card { border: var(--border-muted); padding: 14px; background: var(--bg-dark); }
+        .dll-name { color: var(--accent-blue); font-family: 'Share Tech Mono', monospace; font-size: 19px; margin-bottom: 10px; padding-bottom: 7px; border-bottom: 1px solid var(--accent-blue); }
+        .dll-functions { display: flex; flex-direction: column; gap: 3px; max-height: 190px; overflow-y: auto; }
+        .fn-entry { font-family: 'Share Tech Mono', monospace; font-size: 15px; color: var(--text-muted); padding: 2px 0; }
+        .fn-entry.flagged { color: var(--accent-pink); }
+
+        .pie-wrapper { display: flex; gap: 30px; align-items: center; flex-wrap: wrap; }
+        .pie-legend  { display: flex; flex-direction: column; gap: 8px; }
+        .pie-legend-item { display: flex; align-items: center; gap: 10px; font-size: 21px; }
+        .pie-swatch  { width: 14px; height: 14px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.15); }
+        .pie-count   { margin-left: auto; padding-left: 20px; font-family: 'Share Tech Mono', monospace; font-size: 17px; }
+        .pie-warning {
+            padding: 14px 18px; border: 1px solid var(--accent-pink); color: var(--accent-pink);
+            font-size: 23px; background: rgba(254,118,162,0.06); margin-bottom: 18px; display: none;
+        }
+
+        .filter-tabs { display: flex; gap: 2px; margin-bottom: 12px; }
+        .ftab { padding: 7px 20px; cursor: pointer; border: var(--border-muted); color: var(--text-muted); font-family: 'VT323', monospace; font-size: 22px; background: var(--bg-dark); transition: all 0.12s; }
+        .ftab.active { border-color: var(--accent-pink); color: var(--accent-pink); background: rgba(254,118,162,0.07); }
+        .ftab:hover:not(.active) { color: var(--text-main); }
+
+        #string-dump {
+            background: var(--bg-dark); border: var(--border-muted); padding: 14px;
+            max-height: 380px; overflow-y: auto;
+            font-family: 'Share Tech Mono', monospace; font-size: 15px; line-height: 1.7;
+        }
+        .str-entry { display: flex; gap: 10px; padding: 2px 0; border-bottom: 1px dotted rgba(255,255,255,0.04); }
+        .str-off   { color: #5a4f70; min-width: 75px; flex-shrink: 0; font-size: 14px; }
+        .str-val   { word-break: break-all; color: var(--text-muted); }
+        .str-val.flagged { color: var(--accent-pink); }
+
+        .timeline { display: flex; overflow-x: auto; padding-bottom: 10px; gap: 2px; align-items: stretch; }
+        .tl-item  { flex-shrink: 0; border: var(--border-muted); padding: 14px 18px; background: var(--bg-dark); min-width: 160px; }
+        .tl-ver   { color: var(--accent-blue); font-size: 21px; margin-bottom: 4px; }
+        .tl-build { color: var(--text-muted); font-family: 'Share Tech Mono', monospace; font-size: 14px; }
+        .tl-arrow { display: flex; align-items: center; color: #3a2f50; font-size: 20px; padding: 0 4px; flex-shrink: 0; }
+
+        #hex-viewer {
+            background: #0e0b18; border: var(--border-muted); padding: 12px;
+            max-height: 360px; overflow-y: auto;
+            font-family: 'Share Tech Mono', monospace; font-size: 14px; line-height: 1.8;
+        }
+        .hex-row { display: flex; gap: 8px; }
+        .hex-row.row-hl { background: rgba(119,221,255,0.06); }
+        .hex-off   { color: #5a4f70; min-width: 72px; flex-shrink: 0; }
+        .hex-bytes { flex: 1; letter-spacing: 1px; }
+        .hex-bytes b.hl { color: var(--accent-purple); background: rgba(119,221,255,0.22); font-weight: bold; }
+        .hex-ascii { min-width: 135px; color: #5a4f70; padding-left: 10px; border-left: 1px solid #2a1f40; flex-shrink: 0; }
+
+        .no-data { color: var(--text-muted); padding: 20px; text-align: center; font-style: italic; }
+
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        .fade-in    { animation: fadeInUp 0.5s ease both; }
+        .fade-in-d1 { animation: fadeInUp 0.5s 0.2s ease both; }
+        .fade-in-d2 { animation: fadeInUp 0.5s 0.4s ease both; }
+        .fade-in-d3 { animation: fadeInUp 0.5s 0.6s ease both; }
+        .fade-in-d4 { animation: fadeInUp 0.5s 0.8s ease both; }
+        .cursor-blink { display: inline-block; color: var(--accent-pink); animation: blink 1s step-end infinite; margin-left: 2px; }
+        #demo-notice { border-color: var(--accent-purple) !important; background: rgba(119,221,255,0.04) !important; }
+        @media (max-width: 700px) {
+            .section-row { grid-template-columns: 100px 1fr; }
+            .section-row > div:nth-child(3),
+            .section-row > div:nth-child(5) { display: none; }
+            .hero h1 { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="landing-page">
+    <div class="hero fade-in">
+        <h1 id="hero-title"><span class="cursor-blink">_</span></h1>
+        <p>have you tried analyzing an .exe but realized that PE analyzers expect you to know what 0x00400000 means...? ;-; let's make it beginner friendly & pretty (˶ˆᗜˆ˵)</p>
+        <div class="hero-btns">
+            <a href="#" class="neo-btn" onclick="startApp(); return false;">[ start analyzing ]</a>
+            <a href="#" class="neo-btn btn-purple" onclick="loadFakeMalware(); return false;">[ generate fake malware ]</a>
+        </div>
+    </div>
+
+    <div class="accordion-list fade-in-d2">
+        <div class="acc-item">
+            <button class="acc-header" onclick="toggleAcc(this)">
+                <span class="acc-arrow">&gt;</span>"why does this exist?"
+            </button>
+            <div class="acc-body">
+                <p>normal tools are ugly(sorry) and hard to read for beginners. they just throw hex numbers at you and expect you, a beginner, to figure it out. it helps growth, but beginners can't grow from something they don't understand.</p>
+                <p>this is for the cuties who just wanna know if a file is sus without reading a 400 page manual c:</p>
+            </div>
+        </div>
+        <div class="acc-item">
+            <button class="acc-header" onclick="toggleAcc(this)">
+                <span class="acc-arrow">&gt;</span>"is this a virus scanner?"
+            </button>
+            <div class="acc-body">
+                <p>no!! PE-pal is NOT a virus scanner. it will not tell you if a file is safe or not. it will only show you the internal structure of the file and highlight suspicious elements.</p>
+                <ul>
+                <li><strong style="color:var(--accent-pink);">a PE analyzer</strong> is designed to dissect and examine the internal structure of executable files.</li>
+                <li><strong style="color:var(--accent-pink);">a virus scanner</strong> is designed to detect and remove malicious software.</li>
+                </ul>
+                <p>if you want to check if a file is safe, try uploading it to <a href="https://www.virustotal.com" target="_blank">virustotal</a>.</p>
+                <p>seeing an indicator in a PE analyzer does not automatically mean a file is malicious! software developers often use those exact same things for legitimate reasons. finding a sus trait in an analyzer means you should take a closer look, not that it is dangerous.</p>
+            </div>
+        </div>
+        <div class="acc-item">
+            <button class="acc-header" onclick="toggleAcc(this)">
+                <span class="acc-arrow">&gt;</span>"how does this tool even work?"
+            </button>
+            <div class="acc-body">
+                <p><strong style="color:var(--accent-pink);">the simple version:</strong> you give PE-pal a Windows executable file. it reads the file and extracts information about its structure and what functions it uses. then it displays that info in a cute format so you don't have to stare at random hex numbers :D</p>
+                
+                <p><strong style="color:var(--accent-purple);">"what's inside a PE file?"</strong></p>
+                <ul>
+                <li><strong>the DOS header</strong>: the file saying "haiii, i'm an executable!" (it always starts with <code style="color:var(--accent-blue);">4D 5A</code> = "MZ" in text)</li>
+                <li><strong>sections</strong>: containers that hold code (.text), data (.data), or other stuff. each section is encrypted or not depending on how sophisticated the malware is.</li>
+                <li><strong>the import table (IAT)</strong>: a list of functions the .exe is calling from Windows. like if it's calling CreateRemoteThread, that's sus because it lets you inject code into other processes.</li>
+                <li><strong>strings</strong>: readable text hidden in the binary like URLs, file paths, IPs, or registry keys. malware sometimes leaves these as clues c;</li>
+                <li><strong>the rich header</strong>: metadata that shows which compiler version built the file (usually hidden by malware to cover its tracks)</li>
+                </ul>
+
+                <p><strong style="color:var(--accent-purple);">"what does PE-pal do with this?"</strong></p>
+                <ul>
+                <li><strong>entropy analysis</strong>: measures how "random" each section is. normal code has patterns, encrypted/packed malware doesn't. it's a jumbled mess. (entropy &gt; 7.0 = sus)</li>
+                <li><strong>function classification</strong>: groups imported functions by behavior (networking, file system, process injection, etc.) so you can see what the malware is trying to do, in simple terms.</li>
+                <li><strong>string flagging</strong>: highlights URLs, IPs, and file paths as suspicious since badly-written malware sometimes hardcodes these</li>
+                <li><strong>compiler tracking</strong>: shows the compiler timeline so you can see if the file is a frankenstein of different builds</li>
+                </ul>
+
+                <p><strong style="color:var(--accent-purple);">"how does the code work?"</strong></p>
+                <ul>
+                <li><strong>you drag a file</strong> and the browser loads it into memory as bytes</li>
+                <li><strong>web worker processes it</strong> and a separate JavaScript thread (worker.js) parses the PE structure without freezing the UI. it reads binary data using DataView API to extract all the things mentioned above.</li>
+                <li><strong>calculations happen</strong>. entropy is calculated for each section using information theory (frequency analysis). then, functions are categorized. strings are extracted by scanning for readable ASCII text in the hex.</li>
+                <li><strong>data flows back</strong>. the worker sends results to the main thread, which renders cutie charts so you can actually understand what's going on :3</li>
+                <li><strong>no files leave your computer</strong>! everything happens in your browser's memory. the moment you close the tab, it'll all be gone.</li>
+                </ul>
+
+                <p style="color:var(--text-muted);"><em>tl;dr: PE-pal is a binary file translator. it reads the instructions inside your PE file and tells you what it's trying to do in a language that doesn't require a compsci degree to understand! (´ ▽` )b</em></p>
+            </div>
+        </div>
+        <div class="acc-item">
+            <button class="acc-header" onclick="toggleAcc(this)">
+                <span class="acc-arrow">&gt;</span>privacy policy
+            </button>
+            <div class="acc-body">
+                <p>paranoid? good! welcome to infosec o_o</p>
+                <p>this runs <strong>100% in your browser</strong>. the file never leaves your pc. you won't be uploading anything to my servers. all this magic happens locally through javascript (&#7508;&#9645;&#7508;)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tutorial-box fade-in-d3">
+        <h2>how to use (guide 4 dummies)</h2>
+        <div class="step">
+            <div class="step-num">01.</div>
+            <div class="step-content">
+                <h3>find a sus file</h3>
+                <p>got any sus PE from trying to download free games? no? then click <strong>[ generate fake malware ]</strong> above to see a demo instantly.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">02.</div>
+            <div class="step-content">
+                <h3>drag and drop!</h3>
+                <p>throw it into the box on the next page!(&#7508;&#9645;&#7508;)</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">03.</div>
+            <div class="step-content">
+                <h3>inspect the stuff</h3>
+                <p>hover over the (???) icons to see explanations or warnings about suspicious elements. the web is your best friend here! search the function names online to learn more.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="fade-in-d4">
+        made with love and sugar-free redbull (not sponsored) &nbsp;|&nbsp; no viruses were harmed in the making of this tool
+        <br><a href="https://zeynepkaya.com" target="_blank">© 2026 zeynep.</a>
+    </footer>
+</div>
+
+<div id="app-wrapper">
+    <div class="app-topbar">
+        <span>PE-pal :3</span>
+        <button class="neo-btn-small" onclick="resetApp()">&lt;--</button>
+    </div>
+
+    <div id="drop-zone">
+        <div class="drop-icon">[ FILE ]</div>
+        <h2 style="margin:0;color:var(--accent-purple);">drop it here (&#7508;&#9645;&#7508;)</h2>
+        <p style="color:var(--text-muted);margin-top:6px;font-size:20px;">.exe &nbsp;.dll &nbsp;.sys &nbsp;.ocx</p>
+        <div style="margin-top:14px;">
+            <button class="neo-btn-small" style="border-color:var(--accent-purple);color:var(--accent-purple);"
+                onclick="event.stopPropagation(); loadFakeMalware();">
+                [ generate fake malware ]
+            </button>
+        </div>
+    </div>
+
+    <div id="loading-bar-wrap">
+        <div id="loading-msg">initializing... (&#9685;&#8255;&#9685;)</div>
+        <div id="loading-track">parsing file... [............] 0%</div>
+    </div>
+
+    <div id="dashboard">
+
+        
+        <div class="card">
+            <div class="file-info-bar">
+                <div>
+                    <h1 class="file-title mono" id="file-name">filename.exe</h1>
+                    <div style="margin-top:8px;">
+                        <span class="badge" id="file-arch">ARCH</span>
+                        <span class="badge" id="file-size">SIZE</span>
+                        <span class="badge" id="file-timestamp">TS</span>
+                    </div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+                    <button class="neo-btn-small" onclick="resetApp()">&lt;-- analyze new file</button>
+                </div>
+            </div>
+        </div>
+
+        
+        <div id="demo-notice" class="card" style="display:none;">
+            <div style="color:var(--accent-purple);font-size:26px;">( ˶°ㅁ°) !! heads up! this is a demo, not real malware.</div>
+            <div style="color:var(--text-muted);font-size:20px;margin-top:10px;">
+                this is a <strong style="color:var(--accent-pink);">hardcoded example</strong> showing what a suspicious PE file analysis looks like.
+                no actual malware was generated or run! your computer is completely safe (&#7508;&#9645;&#7508;)<br><br>
+                the sections (.UPX0, .UPX1), imports, strings, entropy scores and red flags shown here are all <strong style="color:var(--accent-pink);">fake data</strong> meant to demonstrate what real malware signatures may look like.
+                to analyze a real file, go back and drag-drop an actual .exe onto the drop zone.
+            </div>
+        </div>
+
+        
+        <div id="demo-notice" class="card" style="display:none;">
+            <div style="color:var(--accent-purple);font-size:26px;">(&#9685;&#8255;&#9685;) heads up! this is a demo, not real malware.</div>
+            <div style="color:var(--text-muted);font-size:20px;margin-top:10px;">
+                this is a <strong style="color:var(--accent-pink);">hardcoded example</strong> showing what a suspicious PE file analysis looks like.
+                no actual malware was generated or run! your computer is completely safe (&#7508;&#9645;&#7508;)<br><br>
+                the sections (.UPX0, .UPX1), imports, strings, entropy scores and red flags shown here are all <strong style="color:var(--accent-pink);">fake data</strong> meant to demonstrate what real malware signatures may look like.
+                to analyze a real file, go back and drag-drop an actual .exe onto the drop zone.
+            </div>
+        </div>
+
+        
+        <div class="card">
+            <h2 style="margin-bottom:15px;color:var(--accent-purple);">file anatomy map
+                <span class="info-trigger">&nbsp;(???)
+                    <span class="info-text">this map shows how much space each section of the PE takes up. if a section is pink and striped, it's sus! click a segment to highlight it on the hex viewer below.</span>
+                </span>
+            </h2>
+            <div id="section-map-container"></div>
+            <div id="section-map-legend" style="display:flex;gap:15px;flex-wrap:wrap;font-size:19px;color:var(--text-muted);margin-top:8px;"></div>
+        </div>
+
+        
+        <div class="card">
+            <h2 style="margin-bottom:20px;color:var(--accent-pink);">section breakdown
+                <span class="info-trigger">&nbsp;(???)
+                    <span class="info-text">sections are containers inside the file. we check their 'entropy' (randomness). normal code has patterns. encrypted/packed malware is obfuscated (random mess). anything above 7.0 is sus.</span>
+                </span>
+            </h2>
+            <p>you can read the hexadecimal representation of only the <strong style="color:var(--accent-pink);">.text</strong> section. click on the section name to go there!</p>
+            <div class="section-row" style="color:var(--text-muted);font-size:17px;border-bottom:2px solid #3a2f50;cursor:default;">
+                <div>name</div><div>entropy</div><div>size</div><div>red flags</div><div>characteristics</div>
+            </div>
+            <div id="section-list"></div>
+        </div>
+
+        
+        <div class="card">
+            <h2 style="margin-bottom:20px;color:var(--accent-blue);">import table (IAT)
+                <span class="info-trigger">&nbsp;(???)
+                    <span class="info-text">the import table is the list of external functions the .exe is calling. if it's calling things like CreateRemoteThread or URLDownloadToFile, it may be a red flag! pink function names are usually sus, but not always. some apps genuinely need it! the web is your best friend here.</span>
+                </span>
+            </h2>
+            <div id="iat-container" class="iat-grid"></div>
+        </div>
+
+        
+        <div class="card">
+            <h2 style="margin-bottom:15px;color:var(--accent-purple);">malware intent analysis
+                <span class="info-trigger">&nbsp;(???)
+                    <span class="info-text">here is a pie chart of the imported functions categorized by their behavior. a file that mainly imports 'process injection' functions is probably trying to hide inside another process.</span>
+                </span>
+            </h2>
+            <div id="pie-warning" class="pie-warning"></div>
+            <div class="pie-wrapper">
+                <svg id="pie-svg" width="200" height="200" viewBox="0 0 200 200" style="flex-shrink:0;"></svg>
+                <div class="pie-legend" id="pie-legend"></div>
+            </div>
+        </div>
+
+        
+        <div class="card">
+            <h2 style="margin-bottom:15px;color:var(--accent-pink);">string dump
+                <span class="info-trigger">&nbsp;(???)
+                    <span class="info-text">here is every byte scanned as we looked for readable text! pink strings are sus because they're URLs, IP addresses or file paths. some poorly-made malware has these hardcoded in plain sight. they're usually undetectable in modern malware, so don't rely on this alone.</span>
+                </span>
+            </h2>
+            <div class="filter-tabs">
+                <button class="ftab active" id="ftab-all" onclick="filterStrings('all')">all strings</button>
+                <button class="ftab" id="ftab-flagged" onclick="filterStrings('flagged')">flagged only</button>
+            </div>
+            <div id="string-dump"></div>
+        </div>
+
+        
+        <div class="card">
+            <h2 style="margin-bottom:15px;color:var(--accent-blue);">compilation timeline (rich header)
+                <span class="info-trigger">&nbsp;(???)
+                    <span class="info-text">microsoft compilers secretly embed a 'rich header' between the DOS stub and PE signature. it records which compiler versions built each part of the file. malware sometimes zeroes this out to hide its origins.</span>
+                </span>
+            </h2>
+            <div class="timeline" id="rich-timeline"></div>
+        </div>
+
+        <div class="card">
+            <h2 style="margin-bottom:15px;color:var(--text-muted);">raw hex viewer
+                <span class="info-trigger">&nbsp;(???)
+                    <span class="info-text">this shows the raw bytes of the file in hexadecimal. click a section in the map or list above to jump to it here and light it up in cyan. shows first 64KB max.</span>
+                </span>
+            </h2>
+            <div class="acc-item" style="margin-bottom:14px;">
+                <button class="acc-header" onclick="toggleAcc(this)">
+                    <span class="acc-arrow">&gt;</span>&nbsp;"(≖_≖ ) what even is this??"
+                </button>
+                <div class="acc-body">
+                    <p style="margin:0 0 8px;color:var(--text-muted);">every file on ur computer is just <strong style="color:var(--text-main);">bytes</strong>. bytes are numbers from 0 to 255. this viewer shows the raw bytes of the file you dropped in <strong style="color:var(--text-main);">hexadecimal (base 16)</strong>. one byte is exactly two hexadecimal digits, from 00 to FF.</p>
+                    <p style="margin:0 0 8px;color:var(--text-muted);">each row has three columns: <strong style="color:var(--accent-blue);">offset</strong> (where in the file this row starts, starting from zero) &nbsp;&#8594;&nbsp; <strong style="color:var(--accent-blue);">hex bytes</strong> (the actual byte values) &nbsp;&#8594;&nbsp; <strong style="color:var(--accent-blue);">ascii</strong> (what those bytes look like as text. a dot (".") means the byte isn't a printable character).</p>
+                    <p style="margin:0 0 8px;color:var(--text-muted);">why hex? 1 byte is exactly 2 hexadecimal digits, and it's more compact than decimal. the very first two bytes of any .exe file are always <span style="color:var(--accent-pink);">4D 5A</span>. that's the <strong style="color:var(--text-main);">MZ magic signature</strong>! it tells windows &quot;haiii, i'm an executable!&quot; (it was named after Mark Zbikowski, a DOS developer at Microsoft in 1981 !!)</p>
+                    <p style="margin:0;color:var(--text-muted);">click any section in the map or list above and this viewer jumps to those bytes and highlights them in <span style="color:var(--accent-purple);">cyan</span>. you are looking at raw machine code/data that your CPU loads into memory. that's literally what the program is. (&#96;&#183;&#969;&#183;&#180;)</p>
+                </div>
+            </div>
+            <div id="hex-viewer"></div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/worker-src" id="worker-source">
+'use strict';
+function postProgress(msg,pct){self.postMessage({type:'progress',message:msg,percent:pct});}
+function calcEntropy(b){if(!b||!b.length)return 0;var f=new Uint32Array(256),i,n=b.length;for(i=0;i<n;i++)f[b[i]]++;var e=0;for(i=0;i<256;i++){if(!f[i])continue;var p=f[i]/n;e-=p*Math.log2(p);}return e;}
+function rvaToOff(rva,secs){if(!rva)return 0;for(var i=0;i<secs.length;i++){var s=secs[i],ve=s.virtualAddress+Math.max(s.virtualSize,s.sizeOfRawData);if(rva>=s.virtualAddress&&rva<ve)return s.pointerToRawData+(rva-s.virtualAddress);}return rva;}
+function rcStr(dv,off,mx){mx=mx||512;if(off<0||off>=dv.byteLength)return'';var s='';for(var i=0;i<mx&&off+i<dv.byteLength;i++){var c=dv.getUint8(off+i);if(!c)break;s+=String.fromCharCode(c);}return s;}
+var ACAT={'CreateRemoteThread':'Process Injection','CreateRemoteThreadEx':'Process Injection','VirtualAllocEx':'Process Injection','VirtualAlloc':'Process Injection','WriteProcessMemory':'Process Injection','NtCreateThreadEx':'Process Injection','RtlCreateUserThread':'Process Injection','QueueUserAPC':'Process Injection','OpenProcess':'Process Injection','NtUnmapViewOfSection':'Process Injection','NtMapViewOfSection':'Process Injection','SetWindowsHookEx':'Process Injection','URLDownloadToFile':'Networking','URLDownloadToFileA':'Networking','URLDownloadToFileW':'Networking','InternetOpen':'Networking','InternetOpenA':'Networking','InternetOpenW':'Networking','InternetConnect':'Networking','InternetConnectA':'Networking','InternetConnectW':'Networking','HttpOpenRequest':'Networking','HttpOpenRequestA':'Networking','HttpSendRequest':'Networking','HttpSendRequestA':'Networking','WSAStartup':'Networking','socket':'Networking','connect':'Networking','send':'Networking','recv':'Networking','WinHttpOpen':'Networking','WinHttpConnect':'Networking','WinHttpSendRequest':'Networking','RegSetValueEx':'Registry','RegSetValueExA':'Registry','RegSetValueExW':'Registry','RegCreateKeyEx':'Registry','RegCreateKeyExA':'Registry','RegCreateKeyExW':'Registry','RegOpenKeyEx':'Registry','RegOpenKeyExA':'Registry','RegDeleteKey':'Registry','RegDeleteKeyA':'Registry','RegDeleteValue':'Registry','CreateFile':'File System','CreateFileA':'File System','CreateFileW':'File System','DeleteFile':'File System','DeleteFileA':'File System','WriteFile':'File System','ReadFile':'File System','CopyFile':'File System','CopyFileA':'File System','MoveFile':'File System','MoveFileA':'File System','FindFirstFile':'File System','FindFirstFileA':'File System','IsDebuggerPresent':'Anti-Analysis','CheckRemoteDebuggerPresent':'Anti-Analysis','NtQueryInformationProcess':'Anti-Analysis','GetTickCount':'Anti-Analysis','QueryPerformanceCounter':'Anti-Analysis','Sleep':'Anti-Analysis','OutputDebugString':'Anti-Analysis','OutputDebugStringA':'Anti-Analysis','NtSetInformationThread':'Anti-Analysis','GetAsyncKeyState':'Keylogging','GetKeyState':'Keylogging','SetWindowsHookExA':'Keylogging','SetWindowsHookExW':'Keylogging','GetClipboardData':'Keylogging','AdjustTokenPrivileges':'Privilege Escalation','OpenProcessToken':'Privilege Escalation','LookupPrivilegeValue':'Privilege Escalation','LookupPrivilegeValueA':'Privilege Escalation','CryptAcquireContext':'Crypto/Obfuscation','CryptAcquireContextA':'Crypto/Obfuscation','CryptEncrypt':'Crypto/Obfuscation','CryptDecrypt':'Crypto/Obfuscation','CryptGenKey':'Crypto/Obfuscation','CreateServiceA':'Persistence','CreateServiceW':'Persistence','StartService':'Persistence','StartServiceA':'Persistence','ShellExecute':'Persistence','ShellExecuteA':'Persistence','ShellExecuteW':'Persistence','WinExec':'Persistence'};
+function parseIAT(dv,secs,is64,dd){var imps=[],ac={};try{var dir=dd[1];if(!dir||!dir.rva||!dir.size)return{imports:imps,apiCategories:ac};var dOff=rvaToOff(dir.rva,secs),mxD=Math.floor(dir.size/20)+1;for(var di=0;di<mxD&&dOff+20<=dv.byteLength;di++){var ot=dv.getUint32(dOff,true),nr=dv.getUint32(dOff+12,true),ft=dv.getUint32(dOff+16,true);if(!nr&&!ft)break;var dll=rcStr(dv,rvaToOff(nr,secs));if(!dll){dOff+=20;continue;}var fns=[],tr=ot||ft,tO=rvaToOff(tr,secs),ts=is64?8:4;for(var ti=0;ti<1024&&tO+ts<=dv.byteLength;ti++){var lo=dv.getUint32(tO,true),hi=is64?dv.getUint32(tO+4,true):0;if(!lo&&!hi)break;var isO=is64?((hi&0x80000000)!==0):((lo&0x80000000)!==0);if(isO){fns.push('Ordinal #'+(lo&0xFFFF));}else{var hR=is64?lo:(lo&0x7FFFFFFF),hO=rvaToOff(hR,secs);if(hO+2<dv.byteLength){var fn=rcStr(dv,hO+2);if(fn){fns.push(fn);if(ACAT[fn]){var ct=ACAT[fn];ac[ct]=(ac[ct]||0)+1;}}}}tO+=ts;}imps.push({dll:dll,functions:fns});dOff+=20;}}catch(e){}return{imports:imps,apiCategories:ac};}
+function exStrs(bytes){var res=[],MIN=4,LIM=1000,cur='',sO=0;for(var i=0;i<bytes.length&&res.length<LIM;i++){var b=bytes[i];if(b>=32&&b<=126){if(!cur.length)sO=i;cur+=String.fromCharCode(b);}else{if(cur.length>=MIN){var f=[];if(/https?:\/\/|ftp:\/\//i.test(cur))f.push('url');if(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.test(cur))f.push('ip');if(/[a-zA-Z]:\\|\.dll|\.exe|\.bat|\.ps1|\.vbs/i.test(cur))f.push('path');res.push({value:cur,offset:sO,flags:f});}cur='';}}if(cur.length>=MIN){var f2=[];if(/https?:\/\/|ftp:\/\//i.test(cur))f2.push('url');if(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.test(cur))f2.push('ip');if(/[a-zA-Z]:\\|\.dll|\.exe|\.bat|\.ps1|\.vbs/i.test(cur))f2.push('path');res.push({value:cur,offset:sO,flags:f2});}return res;}
+function vsLbl(p){if(p===0)return'Linker';if(p<=5)return'Early MSVC';if(p<=10)return'MSVC 6.0 (1998)';if(p<=15)return'VS.NET 02/03';if(p>=0x50&&p<=0x6F)return'VS 2005';if(p>=0x61&&p<=0x7F)return'VS 2008';if(p>=0x80&&p<=0x9F)return'VS 2010';if(p>=0xB0&&p<=0xBF)return'VS 2012';if(p>=0xC0&&p<=0xCF)return'VS 2013';if(p>=0xD0&&p<=0xFF)return'VS 2015';if(p>=0x100&&p<=0x118)return'VS 2017';if(p>=0x119&&p<=0x140)return'VS 2019';if(p>=0x141)return'VS 2022';return'0x'+p.toString(16);}
+function parseRich(dv,peOff){var e=[];try{var rp=-1,se=Math.min(peOff,dv.byteLength)-4;for(var i=se;i>=0x40;i-=4){if(dv.getUint32(i,true)===0x68636952){rp=i;break;}}if(rp===-1)return e;var xk=dv.getUint32(rp+4,true),dp=-1;for(var j=rp-4;j>=0x40;j-=4){if((dv.getUint32(j,true)^xk)===0x536e6144){dp=j;break;}}if(dp===-1)return e;for(var k=dp+16;k+8<=rp;k+=8){var r1=dv.getUint32(k,true)^xk,r2=dv.getUint32(k+4,true)^xk;e.push({prodId:(r1>>>16)&0xFFFF,buildId:r1&0xFFFF,count:r2,vsVersion:vsLbl((r1>>>16)&0xFFFF)});}}catch(ex){}return e;}
+self.onmessage=function(ev){var buf=ev.data.buffer,fn=ev.data.fileName,dv=new DataView(buf),bytes=new Uint8Array(buf);try{postProgress('reading dos header...',5);if(dv.byteLength<64)throw new Error('file too small to be a valid pe x_x');if(dv.getUint16(0,true)!==0x5A4D)throw new Error('missing mz signature x_x');var peOff=dv.getUint32(0x3C,true);if(peOff<0x40||peOff+24>dv.byteLength)throw new Error('pe offset invalid x_x');postProgress('verifying pe signature...',10);if(dv.getUint32(peOff,true)!==0x00004550)throw new Error('missing pe signature x_x');var cO=peOff+4,mach=dv.getUint16(cO,true),nSec=dv.getUint16(cO+2,true),ts=dv.getUint32(cO+4,true),oSz=dv.getUint16(cO+16,true),is64=(mach===0x8664||mach===0xaa64),optO=cO+20,secO=optO+oSz;postProgress('parsing optional header...',20);var ddB=optO+(is64?112:96),dd=[];for(var di=0;di<16;di++){var ddo=ddB+di*8;dd.push(ddo+8>dv.byteLength?{rva:0,size:0}:{rva:dv.getUint32(ddo,true),size:dv.getUint32(ddo+4,true)});}postProgress('mapping sections...',30);var secs=[],o=secO;for(var si=0;si<nSec;si++){if(o+40>dv.byteLength)break;var nb=new Uint8Array(buf,o,8),nm=new TextDecoder().decode(nb).replace(/\0/g,'');secs.push({name:nm,virtualSize:dv.getUint32(o+8,true),virtualAddress:dv.getUint32(o+12,true),sizeOfRawData:dv.getUint32(o+16,true),pointerToRawData:dv.getUint32(o+20,true),characteristics:dv.getUint32(o+36,true)});o+=40;}postProgress('calculating entropy...',45);var enr=secs.map(function(s){var ent=0,rs=s.pointerToRawData,re=s.sizeOfRawData;if(re>0&&rs<bytes.length)ent=calcEntropy(bytes.subarray(rs,Math.min(rs+re,bytes.length)));var iw=(s.characteristics&0x80000000)!==0,ix=(s.characteristics&0x20000000)!==0;return Object.assign({},s,{entropy:ent,isWx:iw&&ix,isHighEntropy:ent>7.0});});postProgress('parsing IAT...',60);var iat=parseIAT(dv,secs,is64,dd);postProgress('extracting strings...',75);var strs=exStrs(bytes);postProgress('parsing rich header...',88);var rich=parseRich(dv,peOff);postProgress('packaging result...',95);var arch=mach===0x14c?'x86 (32-bit)':mach===0x8664?'x64 (64-bit)':mach===0x01c4?'ARM (32-bit)':mach===0xaa64?'ARM64':'Unknown (0x'+mach.toString(16)+')';var hb=Array.from(bytes.subarray(0,Math.min(bytes.length,65536)));self.postMessage({type:'result',data:{fileName:fn,fileSize:bytes.length,arch:arch,is64bit:is64,timeDateStamp:ts,sections:enr,imports:iat.imports,apiCategories:iat.apiCategories,strings:strs,richHeader:rich,hexBytes:hb,dataDirectories:dd}});}catch(err){self.postMessage({type:'error',message:err.message});}};
+</script>
+
+<script>
+var parsedData       = null;
+var allStrings       = [];
+var currentStrFilter = 'all';
+var currentHexBytes  = [];
+var dragCounter      = 0;
+var landingPage = document.getElementById('landing-page');
+var appWrapper  = document.getElementById('app-wrapper');
+var dropZone    = document.getElementById('drop-zone');
+var dashboard   = document.getElementById('dashboard');
+var loadingWrap = document.getElementById('loading-bar-wrap');
+var SEC_COLORS = ['#ff77a9','#77ddff','#ffcc66','#c49bff','#88d8b0','#ff9e9e','#a8e6cf','#ffd3b6'];
+var PIE_COLORS = ['#ff77a9','#77ddff','#ffcc66','#c49bff','#f48fb1','#80deea','#ce93d8','#ffcc80'];
+var API_CAT_LOOKUP = {'CreateRemoteThread':'Process Injection','CreateRemoteThreadEx':'Process Injection','VirtualAllocEx':'Process Injection','VirtualAlloc':'Process Injection','WriteProcessMemory':'Process Injection','NtCreateThreadEx':'Process Injection','RtlCreateUserThread':'Process Injection','QueueUserAPC':'Process Injection','OpenProcess':'Process Injection','NtUnmapViewOfSection':'Process Injection','NtMapViewOfSection':'Process Injection','SetWindowsHookEx':'Process Injection','URLDownloadToFile':'Networking','URLDownloadToFileA':'Networking','URLDownloadToFileW':'Networking','InternetOpen':'Networking','InternetOpenA':'Networking','InternetOpenW':'Networking','InternetConnect':'Networking','InternetConnectA':'Networking','InternetConnectW':'Networking','HttpOpenRequest':'Networking','HttpOpenRequestA':'Networking','HttpSendRequest':'Networking','HttpSendRequestA':'Networking','WSAStartup':'Networking','socket':'Networking','connect':'Networking','send':'Networking','recv':'Networking','WinHttpOpen':'Networking','WinHttpConnect':'Networking','WinHttpSendRequest':'Networking','RegSetValueEx':'Registry','RegSetValueExA':'Registry','RegSetValueExW':'Registry','RegCreateKeyEx':'Registry','RegCreateKeyExA':'Registry','RegCreateKeyExW':'Registry','RegOpenKeyEx':'Registry','RegOpenKeyExA':'Registry','RegDeleteKey':'Registry','RegDeleteKeyA':'Registry','RegDeleteValue':'Registry','CreateFile':'File System','CreateFileA':'File System','CreateFileW':'File System','DeleteFile':'File System','DeleteFileA':'File System','WriteFile':'File System','ReadFile':'File System','CopyFile':'File System','CopyFileA':'File System','MoveFile':'File System','MoveFileA':'File System','FindFirstFile':'File System','FindFirstFileA':'File System','IsDebuggerPresent':'Anti-Analysis','CheckRemoteDebuggerPresent':'Anti-Analysis','NtQueryInformationProcess':'Anti-Analysis','GetTickCount':'Anti-Analysis','QueryPerformanceCounter':'Anti-Analysis','Sleep':'Anti-Analysis','OutputDebugString':'Anti-Analysis','OutputDebugStringA':'Anti-Analysis','NtSetInformationThread':'Anti-Analysis','GetAsyncKeyState':'Keylogging','GetKeyState':'Keylogging','SetWindowsHookExA':'Keylogging','SetWindowsHookExW':'Keylogging','GetClipboardData':'Keylogging','AdjustTokenPrivileges':'Privilege Escalation','OpenProcessToken':'Privilege Escalation','LookupPrivilegeValue':'Privilege Escalation','LookupPrivilegeValueA':'Privilege Escalation','CryptAcquireContext':'Crypto/Obfuscation','CryptAcquireContextA':'Crypto/Obfuscation','CryptEncrypt':'Crypto/Obfuscation','CryptDecrypt':'Crypto/Obfuscation','CryptGenKey':'Crypto/Obfuscation','CreateServiceA':'Persistence','CreateServiceW':'Persistence','StartService':'Persistence','StartServiceA':'Persistence','ShellExecute':'Persistence','ShellExecuteA':'Persistence','ShellExecuteW':'Persistence','WinExec':'Persistence'};
+function makeWorker() {
+    var src  = document.getElementById('worker-source').textContent;
+    var blob = new Blob([src], { type: 'application/javascript' });
+    return new Worker(URL.createObjectURL(blob));
+}
+function startApp() {
+    landingPage.classList.add('hidden');
+    appWrapper.classList.add('active');
+}
+
+function resetApp() {
+    appWrapper.classList.remove('active');
+    landingPage.classList.remove('hidden');
+    dropZone.classList.remove('hidden');
+    dashboard.classList.remove('active');
+    loadingWrap.classList.remove('visible');
+    parsedData = null; allStrings = []; currentHexBytes = [];
+    history.replaceState(null, '', window.location.pathname);
+}
+function showLoading() { dropZone.classList.add('hidden'); loadingWrap.classList.add('visible'); }
+function hideLoading() { loadingWrap.classList.remove('visible'); }
+
+function updateLoadingBar(msg, pct) {
+    var n = Math.round(12 * pct / 100);
+    document.getElementById('loading-msg').textContent   = msg;
+    document.getElementById('loading-track').textContent =
+        'parsing file... [' + '|'.repeat(n) + '.'.repeat(12 - n) + '] ' + pct + '%';
+}
+['dragenter','dragover','dragleave','drop'].forEach(function(ev) {
+    document.body.addEventListener(ev, function(e) { e.preventDefault(); }, false);
+});
+
+dropZone.addEventListener('dragenter', function(e) { e.preventDefault(); dragCounter++; dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', function(e) { e.preventDefault(); if (--dragCounter === 0) dropZone.classList.remove('dragover'); });
+dropZone.addEventListener('drop', function(e) {
+    e.preventDefault(); dragCounter = 0; dropZone.classList.remove('dragover');
+    if (e.dataTransfer.files.length) processFile(e.dataTransfer.files[0]);
+});
+dropZone.addEventListener('click', function() {
+    var inp = document.createElement('input');
+    inp.type = 'file'; inp.accept = '.exe,.dll,.sys,.ocx';
+    inp.onchange = function(ev) { if (ev.target.files.length) processFile(ev.target.files[0]); };
+    inp.click();
+});
+function processFile(file) {
+    if (!file.name.match(/\.(exe|dll|sys|ocx)$/i)) {
+        alert("please drop a valid windows PE file (.exe .dll .sys)!");
+        return;
+    }
+    showLoading(); updateLoadingBar('reading file bytes...', 2);
+
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+        var buffer = ev.target.result;
+        var worker = makeWorker();
+        worker.onmessage = function(msg) {
+            var d = msg.data;
+            if (d.type === 'progress') {
+                updateLoadingBar(d.message, d.percent);
+            } else if (d.type === 'result') {
+                worker.terminate();
+                hideLoading();
+                parsedData = d.data;
+                renderDashboard(parsedData);
+            } else if (d.type === 'error') {
+                worker.terminate(); hideLoading();
+                dropZone.classList.remove('hidden');
+                alert('parsing error: ' + d.message);
+            }
+        };
+        worker.onerror = function(err) {
+            worker.terminate(); hideLoading();
+            dropZone.classList.remove('hidden');
+            alert('worker error x_x ' + (err.message || ''));
+        };
+        worker.postMessage({ buffer: buffer, fileName: file.name }, [buffer]);
+    };
+    reader.readAsArrayBuffer(file);
+}
+var FAKE_MALWARE = {
+    fileName:'sus_file.exe', fileSize:524288, arch:'x86 (32-bit)', is64bit:false,
+    timeDateStamp:1780790400,
+    sections:[
+        {name:'.text', virtualSize:45056,  virtualAddress:4096,   sizeOfRawData:45056,  pointerToRawData:1024,   characteristics:0x60000020, entropy:5.23, isWx:false, isHighEntropy:false},
+        {name:'.UPX0', virtualSize:262144, virtualAddress:53248,  sizeOfRawData:262144, pointerToRawData:46080,  characteristics:0xE0000020, entropy:7.99, isWx:true,  isHighEntropy:true },
+        {name:'.UPX1', virtualSize:131072, virtualAddress:315392, sizeOfRawData:131072, pointerToRawData:308224, characteristics:0xE0000060, entropy:7.87, isWx:true,  isHighEntropy:true },
+        {name:'.rsrc', virtualSize:4096,   virtualAddress:450560, sizeOfRawData:4096,   pointerToRawData:440320, characteristics:0x40000040, entropy:3.21, isWx:false, isHighEntropy:false},
+    ],
+    imports:[
+        {dll:'KERNEL32.dll', functions:['CreateRemoteThread','VirtualAllocEx','WriteProcessMemory','OpenProcess','CreateFileA','WriteFile','GetTickCount','Sleep']},
+        {dll:'WININET.dll',  functions:['InternetOpenA','InternetConnectA','HttpSendRequestA','URLDownloadToFileA']},
+        {dll:'ADVAPI32.dll', functions:['RegSetValueExA','RegCreateKeyExA','AdjustTokenPrivileges','OpenProcessToken']},
+        {dll:'USER32.dll',   functions:['GetAsyncKeyState','GetKeyState','SetWindowsHookExA']},
+    ],
+    apiCategories:{'Process Injection':4,'Networking':4,'Registry':2,'Keylogging':3,'Anti-Analysis':2,'Privilege Escalation':2},
+    strings:[
+        {value:'http://evil-c2.xyz/payload.exe',                       offset:0x1234, flags:['url']      },
+        {value:'http://192.168.1.105/exfil',                           offset:0x1280, flags:['url','ip'] },
+        {value:'C:\\Windows\\System32\\lsass.exe',                     offset:0x1500, flags:['path']     },
+        {value:'C:\\Users\\%USERNAME%\\AppData\\Roaming\\svchost.exe', offset:0x1600, flags:['path']     },
+        {value:'Mozilla/5.0 (Windows NT 10.0; Win64)',                  offset:0x1700, flags:[]           },
+        {value:'SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run',    offset:0x1800, flags:[]           },
+        {value:'GetAsyncKeyState',                                      offset:0x1900, flags:[]           },
+        {value:'CreateRemoteThread',                                    offset:0x1950, flags:[]           },
+        {value:'192.168.1.105',                                         offset:0x2000, flags:['ip']       },
+        {value:'definitely_legit_document.pdf.exe',                     offset:0x2100, flags:['path']     },
+        {value:'UPX!',                                                  offset:0x2200, flags:[]           },
+        {value:'This program cannot be run in DOS mode',                offset:0x2300, flags:[]           },
+    ],
+    richHeader:[
+        {prodId:0x104, buildId:27702, count:5, vsVersion:'VS 2017'},
+        {prodId:0x0A,  buildId:8169,  count:3, vsVersion:'MSVC 6.0 (1998)'},
+        {prodId:0x00,  buildId:0,     count:1, vsVersion:'Linker'},
+    ],
+    hexBytes:[], dataDirectories:[],
+};
+
+function loadFakeMalware() {
+    startApp();
+    parsedData = JSON.parse(JSON.stringify(FAKE_MALWARE));
+    parsedData._isFakeDemo = true;
+    renderDashboard(parsedData);
+}
+
+function escH(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtBytes(n) {
+    if (!n) return '0 B';
+    var k=1024, sz=['B','KB','MB','GB'], i=Math.floor(Math.log(n)/Math.log(k));
+    return parseFloat((n/Math.pow(k,Math.min(i,sz.length-1))).toFixed(2)) + ' ' + sz[Math.min(i,sz.length-1)];
+}
+function fmtTS(ts) {
+    if (!ts) return 'no timestamp';
+    var d = new Date(ts * 1000);
+    if (d.getFullYear() < 1990 || d.getFullYear() > 2050) return 'suspicious ts';
+    return d.toISOString().split('T')[0];
+}
+var SECTION_DESC = {
+    '.text': {desc:'this is the executable code section! .text contains the actual machine code instructions run by the CPU.', link:'https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#File_header'},
+    '.data': {desc:'this is the initialized data section! .data contains static variables and constants defined in the source code.', link:'https://en.wikipedia.org/wiki/Data_segment'},
+    '.rsrc': {desc:'this is the resource section! .rsrc contains resources like icons, cursors, dialog boxes, and string tables.', link:'https://en.wikipedia.org/wiki/Resource_fork'},
+    '.reloc': {desc:'this is the relocation section! .reloc helps windows map the executable to memory at runtime. used for ASLR.', link:'https://en.wikipedia.org/wiki/Relocation_(computing)'},
+    '.debug': {desc:'this is the debug information section! .debug contains symbols and line numbers for debuggers. usually stripped from release builds.', link:'https://en.wikipedia.org/wiki/Debug_symbol'},
+    '.tls': {desc:'this is the thread local storage section! .tls contains memory allocated separately for each thread. threads can store thread-specific data.', link:'https://en.wikipedia.org/wiki/Thread-local_storage'},
+    '.code': {desc:'this is another variant of the executable code section! .code has the same purpose as .text.', link:'https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#File_header'},
+    '.rdata': {desc:'this is the read-only initialized data section! .rdata contains constants and strings that should not be modified.', link:'https://en.wikipedia.org/wiki/Data_segment'},
+    '.UPX0': {desc:'this is the UPX packer section 0! .UPX0 is part of a runtime exe packer that compresses executables. often used by malware to evade detection.', link:'https://en.wikipedia.org/wiki/UPX'},
+    '.UPX1': {desc:'this is the UPX packer section 1! .UPX1 is the second section of UPX-packed data. malware looooves this~!', link:'https://en.wikipedia.org/wiki/UPX'},
+    '.packed': {desc:'this is the packed section! .packed indicates the section contains compressed or encrypted code. this is pretty common in malware.', link:'https://en.wikipedia.org/wiki/Executable_compression'},
+    '.idata': {desc:'this is the import address table section! .idata lists all the external DLLs and functions the exe is calling.', link:'https://en.wikipedia.org/wiki/.idata'},
+};
+function renderDashboard(data) {
+    currentHexBytes = data.hexBytes || [];
+    allStrings      = data.strings  || [];
+
+    dropZone.classList.add('hidden');
+    dashboard.classList.add('active');
+
+    var noticeEl = document.getElementById('demo-notice');
+    if (noticeEl) noticeEl.style.display = data._isFakeDemo ? 'block' : 'none';
+
+    document.getElementById('file-name').textContent      = data.fileName || 'unknown.exe';
+    document.getElementById('file-arch').textContent      = data.arch     || '?';
+    document.getElementById('file-size').textContent      = fmtBytes(data.fileSize || 0);
+    document.getElementById('file-timestamp').textContent = fmtTS(data.timeDateStamp);
+
+    renderSectionMap(data.sections || []);
+    renderSectionList(data.sections || []);
+    renderIAT(data.imports || [], data.apiCategories || {});
+    drawPieChart(data.apiCategories || {});
+    renderStringDump(allStrings, 'all');
+    renderRichHeader(data.richHeader || []);
+    renderHexViewer(-1, -1);
+}
+function renderSectionMap(secs) {
+    var mapEl = document.getElementById('section-map-container');
+    var legEl = document.getElementById('section-map-legend');
+    mapEl.innerHTML = ''; legEl.innerHTML = '';
+    if (!secs.length) { mapEl.innerHTML = '<div class="no-data">no sections found x_x</div>'; return; }
+
+    var total = secs.reduce(function(a,s){ return a + (Math.max(s.virtualSize,s.sizeOfRawData)||1); }, 0);
+
+    secs.forEach(function(sec, idx) {
+        var sz   = Math.max(sec.virtualSize, sec.sizeOfRawData) || 1;
+        var pct  = (sz / total) * 100;
+        var col  = SEC_COLORS[idx % SEC_COLORS.length];
+        var susp = sec.isWx || sec.isHighEntropy;
+
+        var seg = document.createElement('div');
+        seg.className        = 'map-segment' + (susp ? ' suspicious' : '');
+        seg.style.width      = pct + '%';
+        if (!susp) seg.style.backgroundColor = col;
+        seg.style.color      = susp ? 'var(--text-main)' : 'var(--bg-dark)';
+        seg.title            = sec.name + ' (' + fmtBytes(sz) + ')';
+        seg.dataset.idx      = idx;
+        seg.textContent      = pct > 6 ? sec.name : '';
+        seg.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var i = parseInt(this.dataset.idx);
+            if (this.classList.contains('active-section')) { deactivateSection(); } else { activateSection(i); }
+        });
+        mapEl.appendChild(seg);
+
+        var sInfo = SECTION_DESC[sec.name] || {desc:'custom section. not a standard pe section.'};
+
+        var wrapper = document.createElement('div');
+        wrapper.style.cssText = 'display:flex;align-items:center;gap:6px;position:relative;cursor:help;';
+
+        var swatch = document.createElement('div');
+        swatch.style.cssText = 'width:11px;height:11px;flex-shrink:0;' + (susp
+            ? 'background:repeating-linear-gradient(45deg,var(--accent-pink),var(--accent-pink) 2px,var(--bg-dark) 2px,var(--bg-dark) 4px);'
+            : 'background:' + col + ';');
+
+        var nameBox = document.createElement('div');
+        nameBox.style.cssText = 'position:relative;display:inline-block;';
+        nameBox.textContent = sec.name;
+
+        var tip = document.createElement('div');
+        tip.style.cssText = 'visibility:hidden;opacity:0;position:absolute;bottom:130%;left:0;background:var(--bg-dark);border:1px solid var(--accent-pink);padding:10px 14px;width:260px;z-index:9999;transition:opacity 0.2s;font-size:17px;white-space:normal;line-height:1.5;color:var(--text-muted);pointer-events:none;';
+        tip.textContent = sInfo.desc;
+
+        nameBox.appendChild(tip);
+        wrapper.appendChild(swatch);
+        wrapper.appendChild(nameBox);
+        legEl.appendChild(wrapper);
+
+        (function(tipEl) {
+            var hideTimeout = null;
+            function showTip() { if (hideTimeout) clearTimeout(hideTimeout); tipEl.style.visibility = 'visible'; tipEl.style.opacity = '1'; }
+            function hideTip() { hideTimeout = setTimeout(function() { tipEl.style.visibility = 'hidden'; tipEl.style.opacity = '0'; }, 10); }
+            wrapper.addEventListener('mouseenter', showTip);
+            wrapper.addEventListener('mouseleave', hideTip);
+        })(tip);
+    });
+}
+function renderSectionList(secs) {
+    var el = document.getElementById('section-list');
+    if (!secs.length) { el.innerHTML = '<div class="no-data">no sections x_x</div>'; return; }
+    var html = '';
+    secs.forEach(function(sec, idx) {
+        var col   = SEC_COLORS[idx % SEC_COLORS.length];
+        var sz    = Math.max(sec.virtualSize, sec.sizeOfRawData) || 0;
+        var ePct  = Math.min((sec.entropy / 8) * 100, 100);
+        var eCol  = sec.entropy > 7.0 ? 'var(--accent-pink)' : sec.entropy > 5.0 ? '#ffcc66' : '#7090d8';
+        var flags = '';
+        if (!sec.isWx && !sec.isHighEntropy) {
+            flags = '<span style="color:var(--text-muted);font-size:19px;">N/A</span>';
+        } else {
+            if (sec.isWx) flags +=
+                '<span class="flag-badge">W^X <span class="info-trigger">(???)<span class="info-text">' +
+                '<strong>write &amp; execute (W^X):</strong> normal code isn\'t allowed to modify itself while running. ' +
+                'malware uses this to unpack encrypted payloads in-memory so antivirus can\'t scan them off disk. no thank you ;-;' +
+                '</span></span></span><br>';
+            if (sec.isHighEntropy) flags +=
+                '<span class="flag-badge">packed? <span class="info-trigger">(???)<span class="info-text">' +
+                '<strong>high entropy (&gt;7.0):</strong> this section is really messy. ' +
+                'normal code has patterns, so this means the real code is hidden using encryption or compression (a packer). sus!' +
+                '</span></span></span>';
+        }
+        html += '<div class="section-row" data-idx="' + idx + '" onclick="toggleSection(' + idx + ')">' +
+            '<div class="mono" style="color:' + col + ';">' + escH(sec.name) + '</div>' +
+            '<div style="display:flex;align-items:center;gap:12px;">' +
+                '<div class="entropy-bar-bg" style="flex:1;">' +
+                    '<div class="entropy-bar-fill" style="width:' + ePct + '%;background:' + eCol + ';"></div>' +
+                '</div>' +
+                '<span class="mono" style="width:44px;text-align:right;color:' + eCol + ';font-size:16px;">' + sec.entropy.toFixed(2) + '</span>' +
+            '</div>' +
+            '<div class="mono" style="color:var(--text-muted);font-size:16px;">' + fmtBytes(sz) + '</div>' +
+            '<div>' + flags + '</div>' +
+            '<div class="mono" style="color:var(--text-muted);font-size:15px;">0x' + (sec.characteristics>>>0).toString(16).padStart(8,'0') + '</div>' +
+            '</div>';
+    });
+    el.innerHTML = html;
+}
+function activateSection(idx) {
+    document.querySelectorAll('.map-segment').forEach(function(el, i) {
+        el.classList.toggle('active-section', i === idx);
+    });
+    document.querySelectorAll('.section-row[data-idx]').forEach(function(el) {
+        el.classList.toggle('active-section', parseInt(el.dataset.idx) === idx);
+    });
+    if (!parsedData || !parsedData.sections[idx]) return;
+    var s = parsedData.sections[idx];
+    renderHexViewer(s.pointerToRawData, s.pointerToRawData + s.sizeOfRawData);
+}
+function toggleSection(idx) {
+    var el = document.querySelector('.section-row[data-idx="' + idx + '"]');
+    if (el && el.classList.contains('active-section')) { deactivateSection(); } else { activateSection(idx); }
+}
+function deactivateSection() {
+    document.querySelectorAll('.map-segment').forEach(function(el) { el.classList.remove('active-section'); });
+    document.querySelectorAll('.section-row[data-idx]').forEach(function(el) { el.classList.remove('active-section'); });
+}
+function renderIAT(imports, cats) {
+    var el = document.getElementById('iat-container');
+    if (!imports.length) {
+        el.innerHTML = '<div class="no-data">no imports found! file might be packed!</div>';
+        return;
+    }
+    var html = '';
+    imports.forEach(function(imp) {
+        var fhtml = imp.functions.map(function(fn) {
+            var cat = API_CAT_LOOKUP[fn];
+            return '<div class="fn-entry' + (cat ? ' flagged' : '') + '">' + escH(fn) +
+                (cat ? ' <span style="color:var(--text-muted);font-size:13px;opacity:0.7;">[' + escH(cat) + ']</span>' : '') +
+                '</div>';
+        }).join('');
+        html += '<div class="dll-card"><div class="dll-name">' + escH(imp.dll) +
+            ' <span style="color:var(--text-muted);font-size:13px;opacity:0.6;font-family:\'Share Tech Mono\';">(' + imp.functions.length + ')</span></div>' +
+            '<div class="dll-functions">' + fhtml + '</div></div>';
+    });
+    el.innerHTML = html;
+}
+function drawPieChart(cats) {
+    var svgEl  = document.getElementById('pie-svg');
+    var legEl  = document.getElementById('pie-legend');
+    var warnEl = document.getElementById('pie-warning');
+    var entries = Object.keys(cats).map(function(k){ return [k, cats[k]]; }).sort(function(a,b){ return b[1]-a[1]; });
+    var total   = entries.reduce(function(s,e){ return s+e[1]; }, 0);
+
+    if (!total) {
+        svgEl.innerHTML = ''; legEl.innerHTML = '<div class="no-data">no suspicious api categories found! file looks innocent (&#9685;&#8255;&#9685;)</div>';
+        warnEl.style.display = 'none'; return;
+    }
+
+    var cx=100, cy=100, r=85, angle=-Math.PI/2, paths='', legH='';
+    entries.forEach(function(entry, i) {
+        var cat=entry[0], cnt=entry[1], pct=cnt/total, sw=pct*2*Math.PI, ea=angle+sw;
+        var col=PIE_COLORS[i%PIE_COLORS.length];
+        var x1=cx+r*Math.cos(angle), y1=cy+r*Math.sin(angle), x2=cx+r*Math.cos(ea), y2=cy+r*Math.sin(ea);
+        if (Math.abs(pct-1)<0.0001) {
+            paths += '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+col+'" stroke="#120e1a" stroke-width="2"/>';
+        } else {
+            paths += '<path d="M '+cx+' '+cy+' L '+x1.toFixed(2)+' '+y1.toFixed(2)+
+                ' A '+r+' '+r+' 0 '+(sw>Math.PI?1:0)+' 1 '+x2.toFixed(2)+' '+y2.toFixed(2)+' Z"'+
+                ' fill="'+col+'" stroke="#120e1a" stroke-width="2"/>';
+        }
+        legH += '<div class="pie-legend-item"><div class="pie-swatch" style="background:'+col+';"></div>'+
+            '<span style="color:var(--text-muted);">'+escH(cat)+'</span>'+
+            '<span class="pie-count" style="color:'+col+';">'+cnt+'</span></div>';
+        angle = ea;
+    });
+
+    svgEl.innerHTML = paths; legEl.innerHTML = legH;
+    var injPct = (cats['Process Injection']||0)/total, keyPct = (cats['Keylogging']||0)/total;
+    if (injPct > 0.2) { warnEl.style.display='block'; warnEl.textContent='wow this file loves injecting things... sus!'; }
+    else if (keyPct > 0.2) { warnEl.style.display='block'; warnEl.textContent='this file has a LOT of keylogging functions... is it trying to spy on someone?'; }
+    else { warnEl.style.display='none'; }
+}
+function filterStrings(f) {
+    currentStrFilter = f;
+    document.getElementById('ftab-all').classList.toggle('active',    f === 'all');
+    document.getElementById('ftab-flagged').classList.toggle('active', f === 'flagged');
+    renderStringDump(allStrings, f);
+}
+
+function renderStringDump(strs, filter) {
+    var el   = document.getElementById('string-dump');
+    var list = filter === 'flagged' ? strs.filter(function(s){ return s.flags && s.flags.length; }) : strs;
+    if (!list.length) {
+        el.innerHTML = '<div class="no-data">' + (filter==='flagged' ? 'no flagged strings! maybe it\'s clean (๑ᵔ⤙ᵔ๑)' : 'no printable strings found.') + '</div>';
+        return;
+    }
+    var html = '';
+    list.forEach(function(s) {
+        var fl = s.flags && s.flags.length;
+        html += '<div class="str-entry"><span class="str-off">0x' + (s.offset||0).toString(16).padStart(6,'0') + '</span>' +
+            '<span class="str-val' + (fl ? ' flagged' : '') + '">' + escH(s.value) +
+            (fl ? ' <span style="color:#3a2f50;font-size:13px;">[' + escH(s.flags.join(',')) + ']</span>' : '') +
+            '</span></div>';
+    });
+    el.innerHTML = html;
+}
+function renderRichHeader(entries) {
+    var el = document.getElementById('rich-timeline');
+    if (!entries || !entries.length) {
+        el.innerHTML = '<div class="no-data">no rich header found! header might have been wiped to hide compiler fingerprint! sus ;-;</div>';
+        return;
+    }
+    var seen={}, deduped=[];
+    entries.forEach(function(e) {
+        if (!seen[e.vsVersion]) { seen[e.vsVersion]=true; deduped.push({vsVersion:e.vsVersion, buildId:e.buildId, count:e.count}); }
+        else { for(var i=0;i<deduped.length;i++) if(deduped[i].vsVersion===e.vsVersion){ deduped[i].count+=e.count; break; } }
+    });
+    var html = '';
+    deduped.forEach(function(e, i) {
+        if (i > 0) html += '<div class="tl-arrow">--&gt;</div>';
+        html += '<div class="tl-item"><div class="tl-ver">' + escH(e.vsVersion) + '</div>' +
+            '<div class="tl-build">build 0x' + (e.buildId||0).toString(16) + ' &nbsp;x' + (e.count||1) + '</div></div>';
+    });
+    el.innerHTML = html;
+}
+var HEX_PER_ROW  = 16;
+var HEX_MAX_ROWS = 256; // 4096 bytes per page
+
+function renderHexViewer(hlStart, hlEnd) {
+    var el = document.getElementById('hex-viewer');
+    var hb = currentHexBytes;
+    if (!hb || !hb.length) {
+        el.innerHTML = '<div class="no-data">no raw bytes available (shared links don\'t include hex data)</div>';
+        return;
+    }
+    var pageStart = 0;
+    if (hlStart >= 0) {
+        var targetRow = Math.floor(hlStart / HEX_PER_ROW);
+        pageStart     = Math.max(0, targetRow - 8) * HEX_PER_ROW;
+    }
+    pageStart = Math.max(0, Math.min(pageStart, hb.length - 1));
+    var pageEnd = Math.min(pageStart + HEX_MAX_ROWS * HEX_PER_ROW, hb.length);
+    var html = '';
+
+    for (var i = pageStart; i < pageEnd; i += HEX_PER_ROW) {
+        var re = Math.min(i + HEX_PER_ROW, pageEnd);
+        var inHL = hlStart >= 0 && i < hlEnd && re > hlStart;
+        var hexP = '', ascP = '';
+        for (var j = i; j < re; j++) {
+            var b  = hb[j], h2 = b.toString(16).padStart(2,'0');
+            var inB = hlStart >= 0 && j >= hlStart && j < hlEnd;
+            hexP += inB ? ('<b class="hl">'+h2+'</b> ') : (h2+' ');
+            ascP += (b >= 32 && b <= 126) ? String.fromCharCode(b) : '.';
+        }
+        for (var p = re; p < i + HEX_PER_ROW; p++) { hexP += '   '; ascP += ' '; }
+        html += '<div class="hex-row' + (inHL ? ' row-hl' : '') + '">' +
+            '<span class="hex-off">' + i.toString(16).padStart(8,'0') + '</span>' +
+            '<span class="hex-bytes">' + hexP + '</span>' +
+            '<span class="hex-ascii">' + escH(ascP) + '</span></div>';
+    }
+
+    el.innerHTML = html;
+    if (hlStart >= 0) {
+        var firstHL = el.querySelector('.row-hl');
+        if (firstHL) setTimeout(function() { firstHL.scrollIntoView({behavior:'smooth',block:'center'}); }, 80);
+    }
+}
+function toggleAcc(btn) {
+    var item = btn.parentElement;
+    var wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.acc-item.open').forEach(function(i) { i.classList.remove('open'); });
+    if (!wasOpen) item.classList.add('open');
+}
+(function() {
+    var el = document.getElementById('hero-title');
+    if (!el) return;
+    var full = 'PE-pal :3';
+    var i = 0;
+    var t = setInterval(function() {
+        if (i <= full.length) {
+            var chunk = full.substring(0, i).replace(/</g,'&lt;').replace(/>/g,'&gt;');
+            el.innerHTML = chunk + '<span class="cursor-blink">_</span>';
+            i++;
+        } else {
+            clearInterval(t);
+        }
+    }, 90);
+})();
+</script>
+</body>
+</html>
