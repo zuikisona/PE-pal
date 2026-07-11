@@ -364,7 +364,7 @@
             </button>
             <div class="acc-body">
                 <p>paranoid? good! welcome to infosec o_o</p>
-                <p>this runs <strong>100% in your browser</strong>. the file never leaves your pc. you won't be uploading anything to my servers. all this magic happens locally through javascript (&#7508;&#9645;&#7508;)</p>
+                <p>this runs <strong>100% in your browser</strong>. the file never leaves your pc. you won't be uploading anything to my servers. all this happens locally through javascript (&#7508;&#9645;&#7508;)</p>
             </div>
         </div>
     </div>
@@ -482,7 +482,6 @@
                     <span class="info-text">sections are containers inside the file. we check their 'entropy' (randomness). normal code has patterns. encrypted/packed malware is obfuscated (random mess). anything above 7.0 is sus.</span>
                 </span>
             </h2>
-            <p>you can read the hexadecimal representation of only the <strong style="color:var(--accent-pink);">.text</strong> section. click on the section name to go there!</p>
             <div class="section-row" style="color:var(--text-muted);font-size:17px;border-bottom:2px solid #3a2f50;cursor:default;">
                 <div>name</div><div>entropy</div><div>size</div><div>red flags</div><div>characteristics</div>
             </div>
@@ -550,8 +549,8 @@
                 <div class="acc-body">
                     <p style="margin:0 0 8px;color:var(--text-muted);">every file on ur computer is just <strong style="color:var(--text-main);">bytes</strong>. bytes are numbers from 0 to 255. this viewer shows the raw bytes of the file you dropped in <strong style="color:var(--text-main);">hexadecimal (base 16)</strong>. one byte is exactly two hexadecimal digits, from 00 to FF.</p>
                     <p style="margin:0 0 8px;color:var(--text-muted);">each row has three columns: <strong style="color:var(--accent-blue);">offset</strong> (where in the file this row starts, starting from zero) &nbsp;&#8594;&nbsp; <strong style="color:var(--accent-blue);">hex bytes</strong> (the actual byte values) &nbsp;&#8594;&nbsp; <strong style="color:var(--accent-blue);">ascii</strong> (what those bytes look like as text. a dot (".") means the byte isn't a printable character).</p>
-                    <p style="margin:0 0 8px;color:var(--text-muted);">why hex? 1 byte is exactly 2 hexadecimal digits, and it's more compact than decimal. the very first two bytes of any .exe file are always <span style="color:var(--accent-pink);">4D 5A</span>. that's the <strong style="color:var(--text-main);">MZ magic signature</strong>! it tells windows &quot;haiii, i'm an executable!&quot; (it was named after Mark Zbikowski, a DOS developer at Microsoft in 1981 !!)</p>
-                    <p style="margin:0;color:var(--text-muted);">click any section in the map or list above and this viewer jumps to those bytes and highlights them in <span style="color:var(--accent-purple);">cyan</span>. you are looking at raw machine code/data that your CPU loads into memory. that's literally what the program is. (&#96;&#183;&#969;&#183;&#180;)</p>
+                    <p style="margin:0 0 8px;color:var(--text-muted);">why hex? 1 byte is exactly 2 hexadecimal digits, and it's more compact than decimal. the very first two bytes of any .exe file are always <span style="color:var(--accent-pink);">4D 5A</span>. that's the <strong style="color:var(--text-main);">MZ signature</strong>! it tells windows &quot;haiii, i'm an executable!&quot; (it was named after Mark Zbikowski, a DOS developer at Microsoft in 1981 !!)</p>
+                    <p style="margin:0;color:var(--text-muted);">click any section in the map or list above and this viewer jumps to those bytes and highlights them in <span style="color:var(--accent-purple);">cyan</span>. you are looking at raw machine code/data that your CPU loads into memory.</p>
                 </div>
             </div>
             <div id="hex-viewer"></div>
